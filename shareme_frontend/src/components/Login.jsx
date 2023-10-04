@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 
@@ -12,7 +11,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = (response) => {
-    console.log(response);
     const userInfo = jwt_decode(response.credential);
     localStorage.setItem("user", JSON.stringify(userInfo));
 
