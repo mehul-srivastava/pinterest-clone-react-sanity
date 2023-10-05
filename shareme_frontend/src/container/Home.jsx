@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { Routes, Route } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
+import { AiFillCloseCircle } from "react-icons/ai";
 
-import { Sidebar } from "../components";
-import { fetchUserQuery } from "../utils/data";
-import client from "../client";
+import { Sidebar, UserProfile } from "../components";
+import Pins from "./Pins";
 import logo from "../assets/logo.png";
+import client from "../client";
+import { fetchUserQuery } from "../utils/data";
 
 const Home = () => {
-  const [user, setUser] = useState(null);
   const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [user, setUser] = useState(null);
 
   const userInfo = !!localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
@@ -21,32 +23,47 @@ const Home = () => {
       image: userInfo.picture,
       userName: userInfo.name,
     });
+
+    /* Production purpose
+    const query = fetchUserQuery(userInfo.jti);
+    client.fetch(query).then((data) => setUser(data[0]));
+    */
   }, []);
 
   return (
-    <div className="flex bg-gray-50">
-      <div className="hidden md:flex h-screen">
-        <Sidebar user={user} toggleSidebar={setToggleSidebar} />
+    <div className="flex flex-col md:flex-row bg-gray-50 h-screen">
+      {/* Desktop Navbar */}
+      <div className="hidden md:flex flex-col">
+        <Sidebar user={user && user} handleCloseSidebar={setToggleSidebar} />
       </div>
-      <div className="flex flex-row justify-between items-center w-full p-2 lg:px-10 md:hidden">
-        <HiMenu
-          fontSize={35}
-          onClick={() => setToggleSidebar(true)}
-          className="cursor-pointer md:hidden"
-        />
+
+      {/* Mobile Navbar */}
+      <div className="w-full shadow-sm md:hidden bg-white flex flex-row justify-between items-center p-3">
+        <HiMenu fontSize={30} onClick={() => setToggleSidebar(true)} />
         <img src={logo} alt="logo" className="w-40" />
-        <img src={user?.image} alt="user" className="w-12 rounded-lg" />
+        <img src={user?.image} alt="user" className="w-10 rounded-md" />
+        {toggleSidebar && (
+          <div className="fixed border h-screen w-4/5 left-0 top-0 animate-slide-in">
+            <AiFillCloseCircle
+              fontSize={30}
+              className="absolute top-2 right-2"
+              onClick={() => setToggleSidebar(false)}
+            />
+            <Sidebar
+              user={user && user}
+              handleCloseSidebar={setToggleSidebar}
+            />
+          </div>
+        )}
       </div>
-      {toggleSidebar && (
-        <div className="flex flex-col fixed w-4/5 bg-white h-screen shadow-lg p-4 transition duration-75 animate-slide-in">
-          <AiFillCloseCircle
-            fontSize={30}
-            onClick={() => setToggleSidebar(false)}
-            className="cursor-pointer absolute right-0 top-0 m-2"
-          />
-          <Sidebar user={user} toggleSidebar={setToggleSidebar} />
-        </div>
-      )}
+
+      {/* Main App */}
+      <div>
+        <Routes>
+          <Route path="/user/:userId" element={<UserProfile />} />
+          <Route path="/*" element={<Pins user={user && user} />} />
+        </Routes>
+      </div>
     </div>
   );
 };

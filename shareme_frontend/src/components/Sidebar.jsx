@@ -1,75 +1,62 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
-import { RiHomeFill } from "react-icons/ri";
-import { IoIosArrowForward } from "react-icons/io";
-import logo from "../assets/logo.png";
+import { AiTwotoneHome } from "react-icons/ai";
+import { BsArrowRightCircleFill } from "react-icons/bs";
 
-const isNotActiveStyle =
-  "flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize";
-const isActiveStyle =
-  "flex items-center px-5 gap-3 font-extrabold border-r-2 border-black  transition-all duration-200 ease-in-out capitalize";
+import logo from "../assets/logo.png";
+import { Link, NavLink } from "react-router-dom";
+import { IoIosArrowForward } from "react-icons/io";
+
+const isActiveStyle = `flex flex-row hover:text-black items-center px-3 text-md border-r-2 border-black font-extrabold`;
+const isNotActiveStyle = `flex flex-row text-gray-500 items-center px-3 text-md`;
 
 const categories = [
   { name: "Animals" },
-  { name: "Wallpapers" },
-  { name: "Photography" },
-  { name: "Gaming" },
-  { name: "Coding" },
+  { name: "Entertainment" },
+  { name: "Cars" },
+  { name: "Dogs" },
+  { name: "Arts" },
   { name: "Others" },
 ];
 
-const Sidebar = ({ closeToggle, user }) => {
-  const handleCloseSidebar = () => {
-    if (closeToggle) closeToggle(false);
-  };
-
-  const convertToSlug = (string) => {
-    return string.toLowerCase();
-  };
-
+const Sidebar = ({ user, handleCloseSidebar }) => {
   return (
-    <div className="flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar">
-      <div className="flex flex-col">
-        <Link
-          to="/"
-          className="flex px-5 gap-2 my-6 pt-1 w-190 items-center"
-          onClick={handleCloseSidebar}
-        >
-          <img src={logo} alt="logo" className="w-full" />
-        </Link>
-        <div className="flex flex-col gap-5">
+    <div className="flex flex-col h-full justify-between bg-white pt-4 pl-4">
+      {/* Menu */}
+      <div>
+        <img src={logo} alt="logo" className="w-40 p-3" />
+        <div className="flex flex-col gap-4 mt-5">
           <NavLink
             to="/"
             className={({ isActive }) =>
               isActive ? isActiveStyle : isNotActiveStyle
             }
-            onClick={handleCloseSidebar}
           >
-            <RiHomeFill />
-            Home
+            <AiTwotoneHome fontSize={16} />
+            <span className="ml-4 text-md">Home</span>
           </NavLink>
-          <h3 className="mt-6 px-5 text-xs text-gray-500 font-semibold uppercase">
-            Discover cateogries
+          <h3 className="text-xs font-black text-gray-800 uppercase mt-8 mx-3 mr-14">
+            Discover Categories
           </h3>
-          {categories.slice(0, categories.length - 1).map((category) => (
+          {categories.slice(0, -1).map((item) => (
             <NavLink
-              to={`/category/${convertToSlug(category.name)}`}
+              to={item.name.toLowerCase()}
               className={({ isActive }) =>
                 isActive ? isActiveStyle : isNotActiveStyle
               }
-              onClick={handleCloseSidebar}
-              key={category.name}
+              key={item.name}
             >
-              {category.name}
+              <span className="text-md">{item.name}</span>
             </NavLink>
           ))}
         </div>
       </div>
+
+      {/* User Info */}
       {user && (
         <Link
-          to={`user-profile/${user._id}`}
-          className="flex my-5 mb-3 gap-2 p-3 items-center bg-gray-50 rounded-lg shadow-lg mx-3"
-          onClick={handleCloseSidebar}
+          to={`user/${user._id}`}
+          className="flex my-5 mb-3 gap-2 p-3 items-center bg-gray-100 cursor-pointer rounded-lg shadow-xl mr-7"
+          onClick={() => handleCloseSidebar(false)}
         >
           <img src={user.image} className="w-8 rounded-md" alt="user-profile" />
           <p className="text-sm">{user.userName}</p>
