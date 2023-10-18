@@ -36,7 +36,7 @@ const Login = () => {
           type="video/mp4"
           loop={true}
           controls={false}
-          muted={false}
+          muted={true}
           autoPlay={true}
           className="w-full h-full object-cover"
         />

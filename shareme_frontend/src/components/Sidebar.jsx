@@ -20,7 +20,7 @@ const categories = [
 
 const Sidebar = ({ user, handleCloseSidebar }) => {
   return (
-    <div className="flex flex-col h-full justify-between bg-white pt-4 pl-4">
+    <div className="flex flex-col h-full justify-between bg-white pt-4 pl-4 min-w-250">
       {/* Menu */}
       <div>
         <img src={logo} alt="logo" className="w-40 p-3" />
@@ -39,10 +39,11 @@ const Sidebar = ({ user, handleCloseSidebar }) => {
           </h3>
           {categories.slice(0, -1).map((item) => (
             <NavLink
-              to={item.name.toLowerCase()}
+              to={`category/${item.name.toLowerCase()}`}
               className={({ isActive }) =>
                 isActive ? isActiveStyle : isNotActiveStyle
               }
+              onClick={() => handleCloseSidebar(false)}
               key={item.name}
             >
               <span className="text-md">{item.name}</span>
@@ -54,7 +55,7 @@ const Sidebar = ({ user, handleCloseSidebar }) => {
       {/* User Info */}
       {user && (
         <Link
-          to={`user/${user._id}`}
+          to={`/user/${user._id}`}
           className="flex my-5 mb-3 gap-2 p-3 items-center bg-gray-100 cursor-pointer rounded-lg shadow-xl mr-7"
           onClick={() => handleCloseSidebar(false)}
         >
