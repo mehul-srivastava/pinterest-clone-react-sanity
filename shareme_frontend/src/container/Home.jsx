@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { AiFillCloseCircle } from "react-icons/ai";
 
@@ -8,26 +8,25 @@ import Pins from "./Pins";
 import logo from "../assets/logo.png";
 import client from "../client";
 import { fetchUserQuery } from "../utils/data";
+import { fetchUser } from "../utils/fetchUser";
 
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [user, setUser] = useState(null);
-
-  const userInfo = !!localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : localStorage.clear();
+  const userInfo = fetchUser();
 
   useEffect(() => {
-    setUser({
-      _id: userInfo.jti,
-      image: userInfo.picture,
-      userName: userInfo.name,
-    });
-
-    /* Production purpose
-    const query = fetchUserQuery(userInfo.jti);
-    client.fetch(query).then((data) => setUser(data[0]));
-    */
+    if (!userInfo) {
+      const query = fetchUserQuery(userInfo.jti);
+      client.fetch(query).then((data) => setUser(data[0]));
+      // COMMENT: only set user for some properties like given below
+    } else {
+      setUser({
+        _id: userInfo.jti,
+        image: userInfo.picture,
+        userName: userInfo.name,
+      });
+    }
   }, []);
 
   return (
@@ -40,7 +39,9 @@ const Home = () => {
       {/* Mobile Navbar */}
       <div className="w-full shadow-sm md:hidden bg-white flex flex-row justify-between items-center p-3">
         <HiMenu fontSize={30} onClick={() => setToggleSidebar(true)} />
-        <img src={logo} alt="logo" className="w-40" />
+        <Link to="/">
+          <img src={logo} alt="logo" className="w-40" />
+        </Link>
         <img src={user?.image} alt="user" className="w-10 rounded-md" />
         {toggleSidebar && (
           <div className="fixed border h-screen w-4/5 left-0 top-0 animate-slide-in">

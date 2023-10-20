@@ -1,6 +1,5 @@
 import React from "react";
 import { AiTwotoneHome } from "react-icons/ai";
-import { BsArrowRightCircleFill } from "react-icons/bs";
 
 import logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router-dom";
@@ -23,7 +22,9 @@ const Sidebar = ({ user, handleCloseSidebar }) => {
     <div className="flex flex-col h-full justify-between bg-white pt-4 pl-4 min-w-250">
       {/* Menu */}
       <div>
-        <img src={logo} alt="logo" className="w-40 p-3" />
+        <Link to="/">
+          <img src={logo} alt="logo" className="w-40 p-3" />
+        </Link>
         <div className="flex flex-col gap-4 mt-5">
           <NavLink
             to="/"

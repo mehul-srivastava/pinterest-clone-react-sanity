@@ -2,29 +2,29 @@ import React from "react";
 import { IoMdAdd, IoMdSearch } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = ({ searchTerm, setSearchTerm, user }) => {
+const Navbar = ({ user }) => {
   const navigate = useNavigate();
-  if (!user) return null;
 
+  if (!user) return null;
   return (
-    <div className="flex gap-2 w-full mt-5 pb-7">
-      <div className="flex flex-row justify-start items-center bg-white shadow-sm rounded-md border-none outline-none focus-within:shadow w-full">
-        <IoMdSearch fontSize={21} className="ml-1 bg-white" />
+    <div className="my-3 md:my-5 flex flex-row gap-2 items-center">
+      <div className="flex items-center bg-white rounded-md shadow-sm px-2 focus-within:shadow w-full">
+        <IoMdSearch fontSize={21} />
         <input
           type="text"
           placeholder="Search"
-          className="p-2 bg-white outline-none w-full"
+          className="p-2 outline-none w-full"
+          onFocus={() => navigate("/search")}
         />
       </div>
-      <Link to={`/user/${user?._id}`}>
-        <img
-          src={user?.image}
-          alt="user"
-          className="w-10 rounded-md hidden md:block"
-        />
+      <Link to={`/user/${user?._id}`} className="hidden md:block">
+        <img src={user?.image} className="w-10 rounded-sm" />
       </Link>
       <Link to="/create">
-        <IoMdAdd fontSize={38} className="bg-black text-white rounded-md" />
+        <IoMdAdd
+          fontSize={36}
+          className="bg-slate-400 text-white h-100 p-1 rounded-sm"
+        />
       </Link>
     </div>
   );
