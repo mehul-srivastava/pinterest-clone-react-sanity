@@ -22,9 +22,9 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   )?.length;
 
   const handleSavePin = (e) => {
+    e.stopPropagation();
     if (alreadySaved) return;
 
-    e.stopPropagation();
     setSavingPost(true);
 
     const newSave = {
@@ -39,11 +39,11 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     client
       .patch(_id)
       .setIfMissing({ save: [] })
-      .insert("after", "save[-1]", [newSave])
+      .append("save", [newSave])
       .commit()
       .then(() => {
-        setSavingPost(false);
         setSavedPosts([...savedPosts, newSave]);
+        setSavingPost(false);
       });
   };
 
@@ -86,7 +86,10 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                 <button
                   type="button"
                   onClick={handleSavePin}
-                  className="bg-red-500 opacity-70 hover:opacity-100 text-white px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                  disabled={savingPost ? true : false}
+                  className={`bg-red-500 opacity-70 ${
+                    !savingPost && "hover:opacity-100"
+                  } text-white px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none`}
                 >
                   {savingPost ? "Saving..." : "Save"}
                 </button>
