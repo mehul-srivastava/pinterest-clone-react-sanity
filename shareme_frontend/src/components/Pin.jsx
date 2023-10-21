@@ -21,6 +21,17 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
       item.postedBy._ref === user?.jti || item.postedBy._id === user?.jti
   )?.length;
 
+  const extractDomainFromUrl = (url) => {
+    return url
+      .replace("https://", "")
+      .replace("http://", "")
+      .replace("www.", "")
+      .split("/")[0]
+      .split(".")
+      .slice(-2)
+      .join(".");
+  };
+
   const handleSavePin = (e) => {
     e.stopPropagation();
     if (alreadySaved) return;
@@ -95,9 +106,34 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                 </button>
               )}
             </div>
+            <div className="flex justify-between items-center gap-2 w-full">
+              {destination && (
+                <a
+                  href={destination}
+                  target="_blank"
+                  onClick={(e) => e.stopPropagation()}
+                  rel="noreferrer"
+                  className="bg-white flex items-center gap-2 text-black font-semibold p-2 px-4 rounded-full opacity-75 hover:opacity-100 hover:shadow-md text-sm"
+                >
+                  <BsFillArrowUpCircleFill />
+                  {extractDomainFromUrl(destination)}
+                </a>
+              )}
+            </div>
           </div>
         )}
       </div>
+      <Link
+        to={`user/${postedBy?._id}`}
+        className="flex gap-2 mt-2 items-center"
+      >
+        <img
+          src={postedBy?.image}
+          alt="user"
+          className="w-6 h-6 rounded-full object-cover"
+        />
+        <p className="font-semibold text-sm capitalize">{postedBy?.userName}</p>
+      </Link>
     </div>
   );
 };
