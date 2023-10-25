@@ -4,6 +4,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Login from "./components/Login";
 import Home from "./container/Home";
+import DeleteUnusedAssets from "./components/DeleteUnusedAssets";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/*" element={<Home />} />
+        <Route path="/delete-unused-assets" element={<DeleteUnusedAssets />} />
       </Routes>
     </GoogleOAuthProvider>
   );

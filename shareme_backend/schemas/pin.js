@@ -19,7 +19,7 @@ export default {
       type: 'url',
     },
     {
-      name: 'cateogy',
+      name: 'category',
       title: 'Category',
       type: 'string',
     },
