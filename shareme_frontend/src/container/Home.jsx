@@ -32,7 +32,7 @@ const Home = () => {
   return (
     <div className="flex flex-col md:flex-row bg-gray-50 h-screen">
       {/* Desktop Navbar */}
-      <div className="hidden md:flex flex-col">
+      <div className="hidden md:flex flex-col md:min-w-250">
         <Sidebar user={user && user} handleCloseSidebar={setToggleSidebar} />
       </div>
 

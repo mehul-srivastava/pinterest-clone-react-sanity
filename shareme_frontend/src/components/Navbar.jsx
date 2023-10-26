@@ -7,7 +7,7 @@ const Navbar = ({ user }) => {
 
   if (!user) return null;
   return (
-    <div className="my-3 md:my-5 flex flex-row gap-2 items-center">
+    <div className="my-3 mx-2 md:my-5 flex flex-row gap-2 items-center">
       <div className="flex items-center bg-white rounded-md shadow-sm px-2 focus-within:shadow w-full">
         <IoMdSearch fontSize={21} />
         <input
