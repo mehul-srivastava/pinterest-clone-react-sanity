@@ -37,14 +37,14 @@ const Home = () => {
       </div>
 
       {/* Mobile Navbar */}
-      <div className="w-full shadow-sm md:hidden bg-white flex flex-row justify-between items-center p-3">
+      <div className="w-full shadow-sm md:hidden bg-white flex flex-row justify-between items-center p-3 relative">
         <HiMenu fontSize={30} onClick={() => setToggleSidebar(true)} />
         <Link to="/">
           <img src={logo} alt="logo" className="w-40" />
         </Link>
         <img src={user?.image} alt="user" className="w-10 rounded-md" />
         {toggleSidebar && (
-          <div className="fixed border h-screen w-4/5 left-0 top-0 animate-slide-in">
+          <div className="fixed border h-screen w-4/5 left-0 top-0 animate-slide-in z-20">
             <AiFillCloseCircle
               fontSize={30}
               className="absolute top-2 right-2"
