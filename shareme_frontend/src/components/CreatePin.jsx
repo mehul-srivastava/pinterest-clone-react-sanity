@@ -37,14 +37,16 @@ const CreatePin = () => {
 
     const { title, about, destination, category } = formFields;
 
-    if (!title || !about || !category || !destination || !imageAsset) {
+    if (!title || !about || !category || !destination) {
       setErrorMessage({
-        ...errorMessage,
         fields: "Please fill all the details!",
       });
-      if (!imageAsset) {
-        setErrorMessage({ ...errorMessage, file: "Please upload an image!" });
-      }
+      setSubmitLoading(false);
+      return;
+    }
+
+    if (!imageAsset) {
+      setErrorMessage({ file: "Please upload an image!" });
       setSubmitLoading(false);
       return;
     }
@@ -84,6 +86,7 @@ const CreatePin = () => {
     e.stopPropagation();
     e.preventDefault();
     setImageAsset(null);
+    setErrorMessage({ ...errorMessage, file: "" });
 
     client.delete(imageAsset._id).catch((error) => {
       alert("An error occurred while deleting your image...");
