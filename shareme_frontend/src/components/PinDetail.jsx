@@ -26,7 +26,8 @@ const PinDetail = ({ user }) => {
     });
   };
 
-  const addCommentToPin = () => {
+  const addCommentToPin = (e) => {
+    e.preventDefault();
     setIsAddingComment(true);
 
     if (commentInput.trim().length === 0) {
@@ -126,7 +127,10 @@ const PinDetail = ({ user }) => {
           ))}
         </div>
 
-        <div className="flex flex-row justify-center items-center gap-4 mt-3">
+        <form
+          className="flex flex-row justify-center items-center gap-4 mt-3"
+          onSubmit={addCommentToPin}
+        >
           <input
             type="text"
             className="border border-gray-300 outline-none rounded-xl p-2 w-full text-sm"
@@ -135,15 +139,15 @@ const PinDetail = ({ user }) => {
             value={commentInput}
           />
           <button
+            type="submit"
             className={`bg-red-500 text-white font-bold rounded-xl p-2 px-4 outline-none text-sm ${
               isAddingComment && "opacity-75"
             }`}
-            onClick={addCommentToPin}
             disabled={isAddingComment}
           >
             {isAddingComment ? "Posting..." : "Comment"}
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
