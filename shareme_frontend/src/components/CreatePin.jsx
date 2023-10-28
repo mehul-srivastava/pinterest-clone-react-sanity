@@ -155,7 +155,7 @@ const CreatePin = () => {
                 </p>
                 <AiOutlineCloudUpload fontSize={51} />
                 <p className="text-md md:text-lg">Click To Upload</p>
-                <p className="mt-24 text-gray-400 text-sm md:text-md">
+                <p className="mt-24 text-gray-400 text-sm md:text-md px-3 md:px-0">
                   Use high quality JPEG, SVG, PNG, GIF less than 20 MB
                 </p>
                 <input

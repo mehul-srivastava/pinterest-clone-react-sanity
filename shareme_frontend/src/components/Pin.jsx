@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { MdDownloadForOffline } from "react-icons/md";
-import { AiTwotoneDelete } from "react-icons/ai";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
 
 import client from "../client";
 import { urlFor } from "../client";
 import { fetchUser } from "../utils/fetchUser";
+import { extractDomainFromUrl } from "../utils/helpers";
 
 const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   const [postHovered, setPostHovered] = useState(false);
@@ -20,17 +20,6 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     (item) =>
       item.postedBy._ref === user?.jti || item.postedBy._id === user?.jti
   )?.length;
-
-  const extractDomainFromUrl = (url) => {
-    return url
-      .replace("https://", "")
-      .replace("http://", "")
-      .replace("www.", "")
-      .split("/")[0]
-      .split(".")
-      .slice(-2)
-      .join(".");
-  };
 
   const handleSavePin = (e) => {
     e.stopPropagation();
@@ -59,7 +48,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   };
 
   return (
-    <div className="m-2">
+    <div className="m-2 mb-4 md:mb-2">
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}

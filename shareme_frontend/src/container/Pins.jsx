@@ -13,7 +13,7 @@ const Pins = ({ user }) => {
         setSearchTerm={setSearchTerm}
         user={user}
       />
-      <div className="h-full">
+      <div className="h-full px-2">
         <Routes>
           <Route path="/" element={<Feed />} />
           <Route path="/category/:categoryId" element={<Feed />} />

@@ -117,3 +117,22 @@ export const fetchAllPins = `*[_type == 'pin'] | order(_createdAt desc) {
     },
   },
 }`;
+
+export const pinDetailQuery = (id) => {
+  return `*[_type == "pin" && _id == "${id}"]{
+    _id, title, about, destination, image,
+    postedBy -> {
+      userName, image
+    },
+    comments[] {
+      comment,
+      postedBy -> {
+        userName, image
+      }
+    }
+  }`;
+};
+
+export const pinDetailMorePinsQuery = (id) => {
+  return id;
+};
