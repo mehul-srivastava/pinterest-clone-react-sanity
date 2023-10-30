@@ -59,6 +59,7 @@ const PinDetail = ({ user }) => {
         ]);
       })
       .catch(() => {
+        alert("An error occurred while adding your comment. Please try again!");
         setCommentInput("");
         setIsAddingComment(false);
       });

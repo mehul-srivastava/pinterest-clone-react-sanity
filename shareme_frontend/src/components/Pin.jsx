@@ -58,7 +58,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         <img
           className="rounded-lg w-full"
           alt="pin"
-          src={urlFor(image).width(250).url()}
+          src={urlFor(image).url()}
         />
         {postHovered && (
           <div className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50">
