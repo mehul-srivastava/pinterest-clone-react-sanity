@@ -61,7 +61,7 @@ const Home = () => {
       {/* Main App */}
       <div className="w-full h-full">
         <Routes>
-          <Route path="/user/:userId" element={<UserProfile />} />
+          <Route path="/user/:userId" element={<UserProfile user={user} />} />
           <Route path="/*" element={<Pins user={user && user} />} />
         </Routes>
       </div>

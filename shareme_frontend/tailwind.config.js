@@ -50,6 +50,9 @@ export default {
         secondaryColor: "#F0F0F0",
         blackOverlay: "rgba(0, 0 ,0 ,0.7)",
       },
+      translate: {
+        4.25: "17rem",
+      },
       keyframes: {
         "slide-in": {
           "0%": {
