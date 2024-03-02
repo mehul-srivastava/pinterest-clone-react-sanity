@@ -6,8 +6,7 @@ import MasonryLayout from "./MasonryLayout";
 import Spinner from "./Spinner";
 import { fetchAllPins, fetchPinsQuery } from "../utils/data";
 
-const Feed = () => {
-  const [loading, setLoading] = useState(false);
+const Feed = ({ loading, setLoading }) => {
   const [pins, setPins] = useState(null);
   const { categoryId } = useParams();
 
@@ -17,7 +16,7 @@ const Feed = () => {
     if (categoryId) {
       const query = fetchPinsQuery(categoryId);
       client.fetch(query).then((data) => {
-        setPins(data);
+        setPins(data.length === 0 ? null : data);
         setLoading(false);
       });
     } else {
@@ -31,7 +30,15 @@ const Feed = () => {
   if (loading)
     return <Spinner message="We are adding new ideas to your feed!" />;
 
-  return <div>{pins && <MasonryLayout pins={pins} />}</div>;
+  return (
+    <div>
+      {!!pins ? (
+        <MasonryLayout pins={pins} />
+      ) : (
+        <h1>Sorry! We couldn't find pins related to this topic!</h1>
+      )}
+    </div>
+  );
 };
 
 export default Feed;

@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 import { Sidebar, UserProfile } from "../components";
 import Pins from "./Pins";
 import logo from "../assets/logo.png";
-import client from "../client";
-import { fetchUserQuery } from "../utils/data";
 import { fetchUser } from "../utils/fetchUser";
 
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const userInfo = fetchUser();
 
   useEffect(() => {
     if (!userInfo) {
-      const query = fetchUserQuery(userInfo.jti);
-      client.fetch(query).then((data) => setUser(data[0]));
-      // COMMENT: only set user for some properties like given below
+      navigate("/login");
     } else {
       setUser({
         _id: userInfo.jti,

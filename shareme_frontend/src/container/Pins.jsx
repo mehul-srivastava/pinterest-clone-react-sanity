@@ -5,6 +5,7 @@ import { Navbar, Feed, PinDetail, CreatePin, Search } from "../components";
 
 const Pins = ({ user }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="px-2 md:px-5 bg-gray-50">
@@ -13,10 +14,16 @@ const Pins = ({ user }) => {
         setSearchTerm={setSearchTerm}
         user={user}
       />
-      <div className="h-full">
+      <div className={loading ? "h-screen" : "h-full"}>
         <Routes>
-          <Route path="/" element={<Feed />} />
-          <Route path="/category/:categoryId" element={<Feed />} />
+          <Route
+            path="/"
+            element={<Feed loading={loading} setLoading={setLoading} />}
+          />
+          <Route
+            path="/category/:categoryId"
+            element={<Feed loading={loading} setLoading={setLoading} />}
+          />
           <Route path="/pin/:pinId" element={<PinDetail user={user} />} />
           <Route path="/create" element={<CreatePin user={user} />} />
           <Route

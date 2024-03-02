@@ -11,7 +11,7 @@ const isNotActiveStyle = `flex flex-row text-gray-500 items-center px-3 text-md`
 
 const Sidebar = ({ user, handleCloseSidebar }) => {
   return (
-    <div className="flex flex-col h-full justify-between bg-white pt-4 pl-4 min-w-250 md:fixed top-0 left-0">
+    <div className="flex flex-col h-full justify-between bg-white pt-4 pl-4 min-w-250 md:fixed top-0 left-0 overflow-y-auto">
       {/* Menu */}
       <div className="w-full bg-white">
         <Link to="/">

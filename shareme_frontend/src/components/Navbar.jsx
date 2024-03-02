@@ -2,8 +2,20 @@ import React from "react";
 import { IoMdAdd, IoMdSearch } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, setSearchTerm }) => {
   const navigate = useNavigate();
+
+  const getData = (args) => setSearchTerm(args.target.value);
+
+  function debounce(func, timeout = 300) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  }
 
   if (!user) return null;
   return (
@@ -12,6 +24,7 @@ const Navbar = ({ user }) => {
         <IoMdSearch fontSize={21} />
         <input
           type="text"
+          onChange={debounce(getData, 500)}
           placeholder="Search"
           className="p-2 outline-none w-full"
           onFocus={() => navigate("/search")}

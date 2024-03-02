@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
+import { fetchUser } from "../utils/fetchUser";
 import jwt_decode from "jwt-decode";
 
 import shareVideo from "../assets/share.mp4";
@@ -27,6 +28,11 @@ const Login = () => {
       navigate("/", { replace: true });
     });
   };
+
+  useEffect(() => {
+    const userInfo = fetchUser();
+    if (userInfo) navigate("/");
+  });
 
   return (
     <div className="flex justify-center items-center flex-col h-screen">
